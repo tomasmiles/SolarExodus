@@ -1,0 +1,14 @@
+{
+  "name": "SolarExodus",
+  "version": "0.0.1",
+  "description": "Game",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Tomas Miles",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^2.0.16"
+  }
+}
