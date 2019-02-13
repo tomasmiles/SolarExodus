@@ -10,9 +10,9 @@ context.font = "8px Tahoma";
 
 var audioContext = new AudioContext();
 var arrayBuffer = audioContext.createBuffer(2, audioContext.sampleRate * 0.5, audioContext.sampleRate);
-for(var channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
-	var nowBuffering = arrayBuffer.getChannelData(channel);
-	for(var i = 0; i < arrayBuffer.length; i++) {
+for(let channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
+	let nowBuffering = arrayBuffer.getChannelData(channel);
+	for(let i = 0; i < arrayBuffer.length; i++) {
 	nowBuffering[i] = Math.random() * 2 - 1;
 	}
 }
@@ -50,7 +50,7 @@ function Ship(x, y, w, h) {
 	this.hp = 100;
 	this.frame = 0;
 	this.move = function(mx, my) {
-		var newX = this.x + mx;
+		let newX = this.x + mx;
 		if(newX > cx) {
 			this.x = newX - cx;
 		} else if(newX < 0) {
@@ -58,7 +58,7 @@ function Ship(x, y, w, h) {
 		} else {
 			this.x = newX;
 		}
-		var newY = this.y + my;
+		let newY = this.y + my;
 		if(newY > cy) {
 			this.y = cy;
 			isNewGame = true;
@@ -91,7 +91,7 @@ function Planet(x, y, w, h, vx, vy) {
 	this.vy = vy;
 
 	this.move = function() {
-		var newCoords = translate(this.x, this.y, this.vx, this.vy);
+		let newCoords = translate(this.x, this.y, this.vx, this.vy);
 		this.x = newCoords[0];
 		this.y = newCoords[1];
 	}
@@ -106,7 +106,7 @@ function IcePlanet(x, y, w, h, vx, vy) {
 	this.vy = vy;
 
 	this.move = function() {
-		var newCoords = translate(this.x, this.y, this.vx, this.vy);
+		let newCoords = translate(this.x, this.y, this.vx, this.vy);
 		this.x = newCoords[0];
 		this.y = newCoords[1];
 	}
@@ -121,7 +121,7 @@ function Asteroid(x, y, w, h, vx, vy) {
 	this.vy = vy;
 
 	this.move = function() {
-		var newCoords = translate(this.x, this.y, this.vx, this.vy);
+		let newCoords = translate(this.x, this.y, this.vx, this.vy);
 		this.x = newCoords[0];
 		this.y = newCoords[1];
 	}
@@ -137,7 +137,7 @@ function SolarFlare(x, y, w, h, vx, vy) {
 	this.frame = 0;
 
 	this.move = function() {
-		var newCoords = translate(this.x, this.y, this.vx, this.vy);
+		let newCoords = translate(this.x, this.y, this.vx, this.vy);
 		this.x = newCoords[0];
 		this.y = newCoords[1];
 	}
@@ -228,7 +228,7 @@ function drawIcePlanet(x, y, width, height) {
 }
 
 function collide(x1, y1, w1, h1, x2, y2, w2, h2) {
-	var colliding = false;
+	let colliding = false;
 	if(x1 < x2 + w2 &&
 	x1 + w1 > x2 &&
 	y1 < y2 + h2 &&
@@ -296,11 +296,11 @@ function update() {
 		init();
 		isNewGame = false;
 	}
-	var collidedWithSomething = false;
+	let collidedWithSomething = false;
 	player.setGain(0);
 
-	var dx = 0;
-	var dy = 0;
+	let dx = 0;
+	let dy = 0;
 	if(up) {
 		dy -= 10;
 	}
@@ -324,8 +324,8 @@ function update() {
 	if(solarFlares.length > 10) {
 		solarFlares = [];
 	}
-	for(var sf = 0; sf < solarFlares.length; sf++) {
-		var currentFlare = solarFlares[sf];
+	for(let sf = 0; sf < solarFlares.length; sf++) {
+		let currentFlare = solarFlares[sf];
 		currentFlare.move();
 		if(currentFlare.y < cy/2) {
 			currentFlare.frame = 1;
@@ -347,21 +347,21 @@ function update() {
 			collidedWithSomething = true;
 		}
 	}
-	for(var deadFlare = 0; deadFlare < solarFlares.length; deadFlare++) {
+	for(let deadFlare = 0; deadFlare < solarFlares.length; deadFlare++) {
 		if(solarFlares[deadFlare].y < 0) {
 			solarFlares.splice(deadFlare, 1);
 		}
 	}
 
 	if(Math.random() > 0.99 && asteroids.length < 10) {
-		var entryX = 0;
-		var newSize = 5+Math.random()+30;
+		let entryX = 0;
+		let newSize = 5+Math.random()+30;
 		if(Math.random > 0.5) { entryX = cx; }
 		asteroids.push(new Asteroid(entryX, Math.random()*cy, newSize, newSize,
 		(Math.random()-0.5)*20, (Math.random()-0.5)*20));
 	}
-	for(var ast = 0; ast < asteroids.length; ast++) {
-		var currentAsteroid = asteroids[ast];
+	for(let ast = 0; ast < asteroids.length; ast++) {
+		let currentAsteroid = asteroids[ast];
 		currentAsteroid.move();
 		if(currentAsteroid.x > cx) {
 			currentAsteroid.x = 0;
@@ -378,8 +378,8 @@ function update() {
 			collidedWithSomething = true;
 		}
 	}
-	for(var pln = 0; pln < planets.length; pln++) {
-		var currentPlanet = planets[pln];
+	for(let pln = 0; pln < planets.length; pln++) {
+		let currentPlanet = planets[pln];
 		currentPlanet.move();
 		if(currentPlanet.x > cx) {
 			currentPlanet.x = 0;
@@ -394,8 +394,8 @@ function update() {
 			collidedWithSomething = true;
 		}
 	}
-	for(var ice = 0; ice < icePlanets.length; ice++) {
-		var currentIce = icePlanets[ice];
+	for(let ice = 0; ice < icePlanets.length; ice++) {
+		let currentIce = icePlanets[ice];
 		currentIce.move();
 		if(currentIce.x > cx) {
 			currentIce.x = 0;
@@ -428,8 +428,8 @@ function draw() {
 	context.fillStyle = "#000000";
 	context.fillRect(0, 0, cx, cy);
 
-	var sunframe = count%2;
-	for(var w = 0; w < cx/20; w++) {
+	let sunframe = count%2;
+	for(let w = 0; w < cx/20; w++) {
 		drawSunWhite(w*20, cy-20, 20, 20, sunframe);
 		drawSunYellow(w*20, cy-40, 20, 20, sunframe);
 		drawSunOrange(w*20, cy-60, 20, 20, sunframe);
@@ -439,29 +439,29 @@ function draw() {
 	drawShip(player.x, player.y, player.width, player.height, player.frame);
 
 	if(solarFlares.length > 0) {
-		for(var f = 0; f < solarFlares.length; f++) {
-			var flare = solarFlares[f];
+		for(let f = 0; f < solarFlares.length; f++) {
+			let flare = solarFlares[f];
 			drawSolarFlare(flare.x, flare.y, flare.w, flare.h, flare.frame);
 		}
 	}
 
 	if(asteroids.length > 0) {
-		for(var a = 0; a < asteroids.length; a++) {
-			var asteroid = asteroids[a];
+		for(let a = 0; a < asteroids.length; a++) {
+			let asteroid = asteroids[a];
 			drawAsteroid(asteroid.x, asteroid.y, asteroid.w, asteroid.h, 0);
 		}
 	}
 
 	if(planets.length > 0) {
-		for(var p = 0; p < planets.length; p++) {
-			var planet = planets[p];
+		for(let p = 0; p < planets.length; p++) {
+			let planet = planets[p];
 			drawPlanet(planet.x, planet.y, planet.w, planet.h);
 		}
 	}
 
 	if(icePlanets.length > 0) {
-		for(var i = 0; i < icePlanets.length; i++) {
-			var icePlanet = icePlanets[i];
+		for(let i = 0; i < icePlanets.length; i++) {
+			let icePlanet = icePlanets[i];
 			drawIcePlanet(icePlanet.x, icePlanet.y, icePlanet.w, icePlanet.h);
 		}
 	}
@@ -503,9 +503,9 @@ function playBeat() {
 }
 
 function beat() {
-	var kickOsc = audioContext.createOscillator();
+	let kickOsc = audioContext.createOscillator();
 	kickOsc.type = 'sine';
-	var kickGain = audioContext.createGain();
+	let kickGain = audioContext.createGain();
 	kickGain.gain.value = 0;
 	kickOsc.connect(kickGain);
 	kickGain.connect(audioContext.destination);
@@ -518,16 +518,16 @@ function beat() {
 }
 
 function offBeat() {
-	var bassOsc = audioContext.createOscillator();
+	let bassOsc = audioContext.createOscillator();
 	bassOsc.type = 'sine';
 	bassOsc.frequency.setValueAtTime(100+Math.random()*100, audioContext.currentTime);
-	var midOsc = audioContext.createOscillator();
+	let midOsc = audioContext.createOscillator();
 	midOsc.type = 'sine';
 	midOsc.frequency.setValueAtTime(133+Math.random()*133, audioContext.currentTime);
-	var trebOsc = audioContext.createOscillator();
+	let trebOsc = audioContext.createOscillator();
 	trebOsc.type = 'sine';
 	trebOsc.frequency.setValueAtTime(166+Math.random()*166, audioContext.currentTime);
-	var chordGain = audioContext.createGain();
+	let chordGain = audioContext.createGain();
 	chordGain.gain.value = 0.2;
 	bassOsc.connect(chordGain);
 	midOsc.connect(chordGain);
